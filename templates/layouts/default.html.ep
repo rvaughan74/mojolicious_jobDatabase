@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>
+		<%= title %>
+	</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/svg+xml" href="img/icon.svg">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<%= content 'header' %>
+	<script src="functions.js"></script>
+</head>
+
+<body>
+
+	<header>
+		<div class="logo">
+			JOB HUNT D<span class="let_adjust">AT</span>ABASE
+		</div>
+		<div class="links">
+			<button class="link" onClick='window.open("<%=url_for("root") %>","_self");'>Welcome</button> |
+			<button class="link" onClick='window.open("<%=url_for("counts") %>","_self");'>Counts</button> |
+			<button class="link" onClick='window.open("<%=url_for("applied") %>","_self");'>Applied</button> |
+			<button class="link" onClick='window.open("<%=url_for("apply") %>","_self");'>Apply</button> |
+			<button class="link" onClick='window.open("<%=url_for("delete") %>","_self");'>Delete</button> |
+			<button class="link" onClick='window.open("<%=url_for("calendar") %>","_self");'>Calendar</button>
+		</div>
+	</header>
+
+	<div class="content">
+		<%= content %>
+	</div>
+
+	<footer>
+		Original Design by <a href="http://www.2scopedesign.co.uk">Andrew Ward</a> | Redone from XHTML to HTML5 and
+		CSS3 by Ryan Vaughan
+	</footer>
+
+</body>
+
+</html>

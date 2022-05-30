@@ -1,0 +1,45 @@
+% layout 'default';
+% title 'Counts';
+% content_for header => begin
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+% end
+			
+		<h1>Counts</h1>
+		<table id="count" style="width:25%">
+			<thead>
+				<tr>
+					<th>Province</th>
+					<th>Count</th>
+				</tr>
+			</thead>
+		</table>
+		<br>
+		<br>
+		<br>
+
+		<script>
+			$.ajax('/json2/counts',   // request url
+				{
+					success: function (data, status, xhr) {// success callback function
+
+						$('table#count').DataTable({
+							"data": data,
+							"columns": [
+								{
+									"title": "Province",
+									"data": "province",
+									"defaultContent": ""
+								},
+								{
+									"title": "Count",
+									"data": "count",
+									"defaultContent": ""
+								}
+							],
+							"order": [[1, "desc"]],
+							"paging": false
+						});
+					}
+				});
+		</script>

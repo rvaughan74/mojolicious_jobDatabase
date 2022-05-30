@@ -1,0 +1,143 @@
+% layout 'default';
+% title 'Apply';
+% content_for header => begin
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+% end
+			
+		<h1>TO APP<span class="let_adjust">LY</span></h1>
+		<div>
+			<button id="b_apply_all" class="link">All Data</button> |
+			<button id="b_apply_tech" class="link">Tech Only</button> |
+			<button id="b_apply_nontech" class="link">Non-tech Only</button>
+		</div>
+		<table id="apply">
+			<tr>
+				<th>Company</th>
+				<th>Listing</th>
+				<th>Position</th>
+				<th>Ends</th>
+				<th>Rate</th>
+				<th>Hours</th>
+				<th>Wage</th>
+				<th>Phone</th>
+				<th>Link</th>
+			</tr>
+		</table>
+		<br>
+		<br>
+		<br>
+
+		<script>
+			apply = [];
+			$.ajax('/json2/apply',   // request url
+				{
+					success: function (data, status, xhr) {// success callback function
+
+						apply = data;
+						apply_settings = {
+							"data": data,
+							"autoWidth": false,
+							"columns": [
+								{
+									"title": "Company",
+									"data": null,
+									render: function (data, type, row, meta) {
+
+										return data.company + '<br>(' + data.city + ')';
+									},
+									"defaultContent": ""
+								},
+								{
+									"title": "Listing",
+									"data": "listing",
+									"defaultContent": ""
+								},
+								{
+									"title": "Position",
+									"data": "position",
+									render: positionFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Ends",
+									"data": "ends",
+									"width": 60,
+									"defaultContent": ""
+								},
+								{
+									"title": "Rate",
+									"data": "rate",
+									"width": 25,
+									render: cashFormat,
+									"defaultContent": ""
+
+								},
+								{
+									"title": "Hours",
+									"data": "hours",
+									"width": 25,
+									"defaultContent": ""
+								},
+								{
+									"title": "Wage",
+									"data": "wage",
+									render: cashFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Phone",
+									"data": "phone",
+									render: phoneFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Link",
+									"data": "link",
+									render: linkFormat,
+									"defaultContent": ""
+								}
+							],
+							"order": [[3, "asc"], [6, "desc"]]
+						}
+
+						$('table#apply').DataTable(apply_settings);
+					}
+				});
+			
+			$("#b_apply_all").click(function () {
+
+				var table = $('table#apply').DataTable();
+				table.clear();
+				table.rows.add(apply);
+				table.draw();
+			});
+
+			$("#b_apply_tech").click(function () {
+
+				var table = $('table#apply').DataTable();
+				table.clear();
+				var rows = [];
+				apply.forEach((e) => {
+					if (e.tech === 1) {
+						rows.push(e);
+					}
+				});
+				table.rows.add(rows);
+				table.draw();
+			});
+
+			$("#b_apply_nontech").click(function () {
+
+				var table = $('table#apply').DataTable();
+				table.clear();
+				var rows = [];
+				apply.forEach((e) => {
+					if (e.tech === 0) {
+						rows.push(e);
+					}
+				});
+				table.rows.add(rows);
+				table.draw();
+			});
+		</script>

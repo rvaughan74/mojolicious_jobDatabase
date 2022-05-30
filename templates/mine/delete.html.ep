@@ -1,0 +1,92 @@
+% layout 'default';
+% title 'Apply';
+% content_for header => begin
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+% end
+			
+		<h1>TO DELETE</h1>
+		<table id="delete">
+			<tr>
+				<th>Company</th>
+				<th>Listing</th>
+				<th>Ends</th>
+				<th>Rate</th>
+				<th>Hours</th>
+				<th>Wage</th>
+				<th>Phone</th>
+				<th>Link</th>
+			</tr>
+		</table>
+		<br>
+		<br>
+		<br>
+
+		<script>
+			$.ajax('/json2/delete',   // request url
+				{
+					success: function (data, status, xhr) {// success callback function
+
+						delete_settings = {
+							"data": data,
+							"autoWidth": false,
+							"columns": [
+								{
+									"title": "Company",
+									"data": null,
+									render: function (data, type, row, meta) {
+
+										return data.company + '<br>(' + data.city + ')';
+									},
+									"defaultContent": ""
+								},
+								{
+									"title": "Listing",
+									"data": "listing",
+									"defaultContent": ""
+								},
+								{
+									"title": "Ends",
+									"data": "ends",
+									"width": 60,
+									"defaultContent": ""
+								},
+								{
+									"title": "Rate",
+									"data": "rate",
+									"width": 25,
+									render: cashFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Hours",
+									"data": "hours",
+									"width": 25,
+									"defaultContent": ""
+								},
+								{
+									"title": "Wage",
+									"data": "wage",
+									render: cashFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Phone",
+									"data": "phone",
+									render: phoneFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Link",
+									"data": "link",
+									render: linkFormat,
+									"defaultContent": ""
+								}
+							],
+							"order": [[4, "asc"], [0, "asc"]]
+						};
+
+						$('table#delete').DataTable(delete_settings);
+					}
+				});
+		</script>

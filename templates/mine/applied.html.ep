@@ -1,0 +1,132 @@
+% layout 'default';
+% title 'Applied';
+% content_for header => begin
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+% end
+			
+		<h1>APPLIED</h1>
+		<div>
+			<button id="b_applied_all" class="link">All Data</button> |
+			<button id="b_applied_tech" class="link">Tech Only</button> |
+			<button id="b_applied_nontech" class="link">Non-tech Only</button>
+		</div>
+		<table id="applied">
+			<tr>
+				<th>Company</th>
+				<th>Listing</th>
+				<th>Position</th>
+				<th>Ends</th>
+				<th>Wage</th>
+				<th>Phone</th>
+				<th>Link</th>
+				<th>Applied</th>
+			</tr>
+		</table>
+		<br>
+		<br>
+		<br>
+
+		<script>
+			applied = [];
+			$.ajax('/json2/applied',   // request url
+				{
+					success: function (data, status, xhr) {// success callback function
+						
+						applied = data;
+						applied_settings = {
+							"data": data,
+							"autoWidth": false,
+							"columns": [
+								{
+									"title": "Company",
+									"data": null, render: function (data, type, row, meta) {
+
+										return data.company + '<br>(' + data.city + ')';
+									},
+									"defaultContent": ""
+								},
+								{
+									"title": "Listing",
+									"data": "listing",
+									"defaultContent": ""
+								},
+								{
+									"title": "Position",
+									"data": "position",
+									render: positionFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Ends",
+									"data": "ends",
+									"width": 60,
+									"defaultContent": ""
+								},
+								{
+									"title": "Wage",
+									"data": "wage",
+									render: cashFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Phone",
+									"data": "phone",
+									render: phoneFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Link",
+									"data": "link",
+									render: linkFormat,
+									"defaultContent": ""
+								},
+								{
+									"title": "Applied",
+									"data": "applied_date",
+									"defaultContent": ""
+								}
+							],
+							"order": [[7, "desc"], [0, "asc"]]
+						};
+
+						$('table#applied').DataTable(applied_settings);
+					}
+				});
+			
+			$("#b_applied_all").click(function () {
+
+				var table = $('table#applied').DataTable();
+				table.clear();
+				table.rows.add(applied);
+				table.draw();
+			});
+
+			$("#b_applied_tech").click(function () {
+
+				var table = $('table#applied').DataTable();
+				table.clear();
+				var rows = [];
+				applied.forEach((e) => {
+					if (e.tech === 1) {
+						rows.push(e);
+					}
+				});
+				table.rows.add(rows);
+				table.draw();
+			});
+
+			$("#b_applied_nontech").click(function () {
+
+				var table = $('table#applied').DataTable();
+				table.clear();
+				var rows = [];
+				applied.forEach((e) => {
+					if (e.tech === 0) {
+						rows.push(e);
+					}
+				});
+				table.rows.add(rows);
+				table.draw();
+			});
+		</script>

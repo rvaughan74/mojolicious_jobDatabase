@@ -1,0 +1,33 @@
+% layout 'default';
+% title 'Calendar';
+% content_for header => begin
+	<link rel="stylesheet" href="https://fullcalendar.io/releases/core/4.1.0/main.min.css">
+	<link rel="stylesheet" href="https://fullcalendar.io/releases/daygrid/4.1.0/main.min.css">
+	<script src="https://fullcalendar.io/releases/core/4.1.0/main.min.js"></script>
+	<script src="https://fullcalendar.io/releases/daygrid/4.1.0/main.min.js"></script>
+% end
+			
+
+		<h1>CALENDAR</h1>
+		<div id="fullcalendar"></div>
+
+		<script>
+			calendar_settings = {
+				plugins: ['dayGrid'],
+				header: {
+					left: '',
+					center: 'title',
+					right: 'prev today next'
+				},
+				fixedWeekCount: false,
+				height: "parent",
+				timeZone: 'UTC',
+				defaultView: 'dayGridMonth',
+				//events: 'https://fullcalendar.io/demo-events.json'
+				events: "json2/calendar"
+			};
+
+			var calendarEl = document.getElementById('fullcalendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, calendar_settings);
+			calendar.render();
+		</script>

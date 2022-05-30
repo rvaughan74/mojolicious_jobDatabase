@@ -1,0 +1,56 @@
+% layout 'default';
+% title 'Welcome';
+
+		<h1><%=uc(title)%></h1>
+
+		<p>
+			Welcome to my impromtu tool for tracking which jobs I have applied to, which are interesting to me,
+			and how much they are offering. This tool also tracks which saved files should be deleted after the
+			deadline to apply has passed.
+		</p>
+
+		<p>
+			This tool is based on a Design by <a href="http://www.2scopedesign.co.uk">Andrew Ward</a>. Its a
+			really simple layout as you can see.
+			It has been converted to <abbr title="Hyper Text Markup Language Version 5">HTML5</abbr> and
+			<abbr title="Cascading Style Sheet Version 3">CSS3</abbr>.
+			Sadly the backlinks provided are no longer valid. They are included because the original template
+			asked to include them. The stated license terms are "This work is public domain.".
+		</p>
+
+		<img src="img/light.jpg" class="imgleft" width="200" height="150" alt="light" />
+
+		<p>
+			Plans for the sidebar include placing a list of applied to jobs. Specifically those applied a
+			specified time ago for follow up. Originally this was a calendar but having two FullCalendars on the
+			same page isn't working as easily as I had thought.
+		</p>
+
+		<p>
+			This tool used to have an index.js file holding the JavaScript and JQuery code for this tool. It has
+			largely been eliminated by including most of the functions as
+			<abbr title="HTML script tag">&lt;SCRIPT&gt;</abbr> in the templates. This has also simplified the
+			<abbr title="HTML header section tag">&lt;HEADER&gt;</abbr> section keeping the JavaScript libraries
+			to those needed for the specific page.
+		</p>
+
+		<p>
+			This version of the Database tool is being run using <a
+				href="https://mojolicious.org/">Mojolicious</a> a Perl real-time Web Framework currently being
+			run under Linux. Currently all displayed data is saved as JSON files which can be accessed directly by
+			the HTML and JS code for the static webpage, however currently custom routes are being used so I can
+			get used to routing AJAX data in Mojolicious.
+		</p>
+		<br>
+		<h2><%=uc("Future updates will see:")%></h2>
+
+		<blockquote>
+			Automatic updating of the JSON data upon accessing the data serving route or swap to sqlite database.
+			<br>
+			Swapped JSON reading code to Model.
+		</blockquote>
+
+		<blockquote>
+			Deletion of files server-side after job expiry.
+		</blockquote>
+		<br><br><br>
